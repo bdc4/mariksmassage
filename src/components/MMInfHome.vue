@@ -163,7 +163,7 @@ const allShouldShrink = () => {
   return shouldShrink(0) && shouldShrink(1) && shouldShrink(2);
 }
 
-const imageRoot = '/assets/images/';
+const imageRoot = './assets/images/';
 const images = [
   'pricelist/prices1.jpg', 'specials/special1.jpg', 'specials/special2.jpg'
 ];
