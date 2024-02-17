@@ -10,7 +10,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? "/mariksmassage/" : "",
+  base: "/mariksmassage/",//process.env.NODE_ENV === 'production' ? "/mariksmassage/" : "",
   plugins: [
     Vue({
       template: { transformAssetUrls }
