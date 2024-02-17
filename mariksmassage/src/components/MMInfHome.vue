@@ -1,17 +1,14 @@
 <template>
   <div style="height: 100vh; overflow: auto;" id="scroll-target" v-scroll:#scroll-target="onScroll">
-    <VideoBackground src="src/assets/videos/main.mp4" style="height: 100vh; position: absolute;" class="hidden-xs">
-    </VideoBackground>
-    <v-img v-for="imgSrc in images" :key="imgSrc" :src="`${imageRoot + imgSrc}`" width="100vw"
-      :class="`${(sectionIDs[imgSrc] && sectionIDs[imgSrc].join(' ')) || ''}`">
-      <v-container class="h-100 d-flex align-end justify-center">
-        <!--v-btn size="x-large">hello</v-btn-->
-      </v-container>
-    </v-img>
     <div class="mm-button-actions-fixed">
       <v-expand-x-transition>
         <div>
           <div class="d-flex flex-column align-end">
+
+            <v-icon class="toggleUpDown ma-3 hidden-md-and-up" 
+            v-show="showSmallerButtons"
+            :class='{ "rotate": showButtons }' outlined icon="mdi-arrow-left" @click="showButtons = !showButtons"></v-icon>
+
             <v-btn @mouseover="buttonHoverStates[0] = true" @mouseleave="buttonHoverStates[0] = false"
             height="50" :icon="!!shouldShrink(0)" :width="shouldShrink(0) ? undefined : btnWidth" :class="{ 'justify-start': !shouldShrink(0) }">
               <v-icon icon="mdi-calendar" color="success"></v-icon>
@@ -63,6 +60,14 @@
         </div>
       </v-expand-x-transition>
     </div>
+    <VideoBackground src="src/assets/videos/main.mp4" style="height: 100vh; position: absolute;" class="hidden-xs">
+    </VideoBackground>
+    <v-img v-for="imgSrc in images" :key="imgSrc" :src="`${imageRoot + imgSrc}`" width="100vw"
+      :class="`${(sectionIDs[imgSrc] && sectionIDs[imgSrc].join(' ')) || ''}`">
+      <v-container class="h-100 d-flex align-end justify-center">
+        <!--v-btn size="x-large">hello</v-btn-->
+      </v-container>
+    </v-img>
   </div>
 </template>
 
@@ -74,19 +79,23 @@ const offsetTop = ref(0);
 const scrollBreakPoint = 50;
 const showSmallerButtons = ref(false);
 const btnWidth = '220';
+var showButtons = ref(false);
 var buttonHoverStates = ref([false, false, false]);
+var pastBreakPoint = ref(false)
 
 const showAlert = () => {
   alert('got it')
 }
 
 const onScroll = (e) => {
+  var oldVal = offsetTop.value;
   offsetTop.value = e.target.scrollTop;
-  showSmallerButtons.value = (e.target.scrollTop >= scrollBreakPoint);
+  pastBreakPoint.value = e.target.scrollTop >= scrollBreakPoint;
+  showSmallerButtons.value = (showSmallerButtons.value || pastBreakPoint.value);
 }
 
 const shouldShrink = (ind) => {
-  return !!showSmallerButtons.value && !buttonHoverStates.value[ind];
+  return window.innerWidth < 960 && !!showSmallerButtons.value && !buttonHoverStates.value[ind] && !showButtons.value;
 }
 
 const imageRoot = 'src/assets/images/';
@@ -104,5 +113,13 @@ const sectionIDs = {
   position: fixed;
   bottom: 15vh;
   right: calc(max(5vw, 20px));
+  z-index: 1;
+}
+.toggleUpDown {
+    transition: transform .3s ease-in-out !important;  
+}
+
+.toggleUpDown.rotate {
+    transform: rotate(180deg);
 }
 </style>
