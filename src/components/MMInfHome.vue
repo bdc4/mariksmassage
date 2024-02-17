@@ -29,7 +29,7 @@
                   <v-card-text>
                     <v-row>
                       <v-col cols="12">
-                        <v-img src="./../src/assets/images/mark.jpeg" max-height="350"></v-img>
+                        <v-img src="./../assets/images/mark.jpeg" max-height="350"></v-img>
                       </v-col>
                       <v-col>
                         <p>The best way to schedule a massage is to message me on Instagram. The button below will take
@@ -116,7 +116,7 @@
         </div>
       </v-expand-x-transition>
     </div>
-    <VideoBackground src="./../src/assets/videos/main.mp4" style="height: 100vh; position: absolute;" class="hidden-xs">
+    <VideoBackground src="./src/assets/videos/main.mp4" style="height: 100vh; position: absolute;" class="hidden-xs">
     </VideoBackground>
     <v-img v-for="imgSrc in images" :key="imgSrc" :src="`${imageRoot + imgSrc}`" width="100vw"
       :class="`${(sectionIDs[imgSrc] && sectionIDs[imgSrc].join(' ')) || ''}`">
@@ -162,7 +162,7 @@ const allShouldShrink = () => {
   return shouldShrink(0) && shouldShrink(1) && shouldShrink(2);
 }
 
-const imageRoot = './../src/assets/images/';
+const imageRoot = './src/assets/images/';
 const images = [
   'pricelist/prices1.jpg', 'specials/special1.jpg', 'specials/special2.jpg'
 ];
